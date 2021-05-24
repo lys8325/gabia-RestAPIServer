@@ -5,8 +5,8 @@ import RestAPIServer.RPCClient.RPCClient;
 import org.restlet.resource.Get;
 
 public class VmRunActionController extends ServerResource{
-    
-    private RPCClient rPCClient;
+
+    private RPCClient rPCClient = new RPCClient();
 
     @Get
     public void runVm() {
