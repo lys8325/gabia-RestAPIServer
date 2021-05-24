@@ -5,6 +5,9 @@ package RestAPIServer;
 
 import org.restlet.data.Protocol;
 import RestAPIServer.controller.VmController;
+import RestAPIServer.controller.VmRunActionController;
+import RestAPIServer.controller.VmStopActionController;
+
 import org.restlet.Application;
 import org.restlet.Component;
 
@@ -17,6 +20,8 @@ public class App extends Application{
 
         component.getDefaultHost().attach("/vm/{macAddress}", VmController.class);
         component.getDefaultHost().attach("/vm", VmController.class);
+        component.getDefaultHost().attach("/vmRunAction/{macAddress}", VmRunActionController.class);
+        component.getDefaultHost().attach("/vmStopAction/{macAddress}", VmStopActionController.class);
 
         component.start();
     }
