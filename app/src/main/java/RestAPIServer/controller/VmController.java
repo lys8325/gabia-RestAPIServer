@@ -23,11 +23,18 @@ public class VmController extends ServerResource{
         ObjectMapper mapper = new ObjectMapper().registerModule(new JsonOrgModule());
         Vm vm = mapper.convertValue(json, Vm.class);
         
+        // 유효성 검사 - 인자 확인.
+        // 동적 컴포넌트?
+        // 생성.
         System.out.println(vm.toString());
+        System.out.println("has been created!");
     }
 
     @Get
     public void readVm(){
+        // 조회 - 존재 여부 체크.
+        // vm.toString 출력.
+        // 리스트?
         System.out.println((String)this.getRequestAttributes().get("macAddress"));
     }
 
@@ -37,11 +44,19 @@ public class VmController extends ServerResource{
         ObjectMapper mapper = new ObjectMapper().registerModule(new JsonOrgModule());
         Vm vm = mapper.convertValue(json, Vm.class);
         
+
+        // 조회 - 존재 여부 체크.
+        // status 확인.
+        // 수정.
+        // 조회 - 출력.
         System.out.println(vm.toString());
     }
 
     @Delete
     public void deleteVm(){
+        // 조회 - 존재 여부 체크.
+        // status 확인.
+        // 삭제.
         System.out.println((String)this.getRequestAttributes().get("macAddress"));
     }
 }

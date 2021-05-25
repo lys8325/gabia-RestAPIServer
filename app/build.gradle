@@ -57,6 +57,13 @@ dependencies {
     // https://mvnrepository.com/artifact/com.fasterxml.jackson.datatype/jackson-datatype-json-org
     implementation 'com.fasterxml.jackson.datatype:jackson-datatype-json-org:2.12.3'
 
+    // xml rpc
+    // https://mvnrepository.com/artifact/org.apache.xmlrpc/xmlrpc-client
+    implementation 'org.apache.xmlrpc:xmlrpc-client:3.1.3'
+    // https://mvnrepository.com/artifact/org.apache.xmlrpc/xmlrpc-common
+    implementation 'org.apache.xmlrpc:xmlrpc-common:3.1.3'
+    // https://mvnrepository.com/artifact/org.apache.xmlrpc/xmlrpc-server
+    implementation 'org.apache.xmlrpc:xmlrpc-server:3.1.3'
 
 }
 

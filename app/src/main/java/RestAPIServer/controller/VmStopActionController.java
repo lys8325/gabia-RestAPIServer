@@ -13,6 +13,9 @@ public class VmStopActionController extends ServerResource{
         String targetMacAddressString = (String)this.getRequestAttributes().get("macAddress");
         int targetMacAddress = Integer.parseInt(targetMacAddressString);
 
+        // 조회 - 존재 여부 체크.
+        // status 확인.
+        // 수정.
         rPCClient.stopVm(targetMacAddress);
     }
     

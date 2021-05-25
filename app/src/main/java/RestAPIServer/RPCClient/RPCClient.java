@@ -6,16 +6,17 @@ import org.restlet.Request;
 import org.restlet.data.Method;
 import org.restlet.data.Protocol;
 
+import lombok.NoArgsConstructor;
+
+@NoArgsConstructor
 public class RPCClient {
-
-    private RPCClient() {}
-
-    public static RPCClient getInstance(){
-        return InnerInstanceClass.uniqueInstance;
+    
+    private static class InnerRPCClientClass{
+        private static final RPCClient uniqueRPCClientInstance = new RPCClient();
     }
-
-    private static class InnerInstanceClass{
-        private static final RPCClient uniqueInstance = new RPCClient();
+    
+    public static RPCClient getInstance(){
+        return InnerRPCClientClass.uniqueRPCClientInstance;
     }
 
     public void runVm(Integer macAddress){
