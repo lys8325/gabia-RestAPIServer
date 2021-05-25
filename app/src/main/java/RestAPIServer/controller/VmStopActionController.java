@@ -6,7 +6,7 @@ import org.restlet.resource.Get;
 
 public class VmStopActionController extends ServerResource{
 
-    private RPCClient rPCClient;
+    private RPCClient rPCClient = RPCClient.getInstance();
 
     @Get
     public void stopVm() {

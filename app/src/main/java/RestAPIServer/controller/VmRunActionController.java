@@ -6,7 +6,7 @@ import org.restlet.resource.Get;
 
 public class VmRunActionController extends ServerResource{
 
-    private RPCClient rPCClient = new RPCClient();
+    private RPCClient rPCClient = RPCClient.getInstance();
 
     @Get
     public void runVm() {

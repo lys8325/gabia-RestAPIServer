@@ -8,6 +8,16 @@ import org.restlet.data.Protocol;
 
 public class RPCClient {
 
+    private RPCClient() {}
+
+    public static RPCClient getInstance(){
+        return InnerInstanceClass.uniqueInstance;
+    }
+
+    private static class InnerInstanceClass{
+        private static final RPCClient uniqueInstance = new RPCClient();
+    }
+
     public void runVm(Integer macAddress){
         Client client = new Client(new Context(), Protocol.HTTP);
         Request request = new Request();
