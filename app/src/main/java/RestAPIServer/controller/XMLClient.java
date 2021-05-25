@@ -27,11 +27,11 @@ public class XMLClient {
         XmlRpcClientConfigImpl xmlRpcClientConfigImpl = new XmlRpcClientConfigImpl();
         Vector<Serializable> params = new Vector<Serializable>();
 
-        xmlRpcClientConfigImpl.setServerURL(new URL("http://localhost:8889/RPCServer"));
+        xmlRpcClientConfigImpl.setServerURL(new URL("http://localhost:8889"));
         xmlRpcClient.setConfig(xmlRpcClientConfigImpl);
         params.add(macAddress);
 
-        xmlRpcClient.execute("RPCServer.runVm", params);
+        xmlRpcClient.execute("vmAction.runVm", params);
     }
 
     public void stopVm(Integer macAddress) throws XmlRpcException, MalformedURLException{
@@ -39,10 +39,10 @@ public class XMLClient {
         XmlRpcClientConfigImpl xmlRpcClientConfigImpl = new XmlRpcClientConfigImpl();
         Vector<Serializable> params = new Vector<Serializable>();
 
-        xmlRpcClientConfigImpl.setServerURL(new URL("http://localhost:8889/RPCServer"));
+        xmlRpcClientConfigImpl.setServerURL(new URL("http://localhost:8889"));
         xmlRpcClient.setConfig(xmlRpcClientConfigImpl);
         params.add(macAddress);
 
-        xmlRpcClient.execute("RPCServer.stopVm", params);
+        xmlRpcClient.execute("vmAction.stopVm", params);
     }
 }
