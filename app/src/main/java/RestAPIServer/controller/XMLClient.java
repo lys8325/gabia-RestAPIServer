@@ -5,6 +5,8 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.Vector;
 
+import javax.swing.text.html.CSS;
+
 import org.apache.xmlrpc.XmlRpcException;
 import org.apache.xmlrpc.client.XmlRpcClient;
 import org.apache.xmlrpc.client.XmlRpcClientConfigImpl;
@@ -31,7 +33,8 @@ public class XMLClient {
         xmlRpcClient.setConfig(xmlRpcClientConfigImpl);
         params.add(macAddress);
 
-        xmlRpcClient.execute("vmAction.runVm", params);
+        String response = (String)xmlRpcClient.execute("vmAction.runVm", params);
+        System.out.println(response);
     }
 
     public void stopVm(Integer macAddress) throws XmlRpcException, MalformedURLException{
@@ -43,6 +46,7 @@ public class XMLClient {
         xmlRpcClient.setConfig(xmlRpcClientConfigImpl);
         params.add(macAddress);
 
-        xmlRpcClient.execute("vmAction.stopVm", params);
+        String response = (String)xmlRpcClient.execute("vmAction.stopVm", params);
+        System.out.println(response);
     }
 }
