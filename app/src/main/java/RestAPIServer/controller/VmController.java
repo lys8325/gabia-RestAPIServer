@@ -5,6 +5,8 @@ import java.io.IOException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsonorg.JsonOrgModule;
 
+import org.apache.ibatis.session.SqlSession;
+import org.apache.ibatis.session.SqlSessionFactory;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.restlet.representation.Representation;
@@ -14,9 +16,13 @@ import org.restlet.resource.Patch;
 import org.restlet.resource.Post;
 import org.restlet.resource.ServerResource;
 import RestAPIServer.entity.Vm;
+import RestAPIServer.mapper.DBManager;
+import RestAPIServer.mapper.VmMapper;
 
 public class VmController extends ServerResource{
     
+    private DBManager dbManager = DBManager.getInstance();
+
     @Post("json")
     public void createVm(Representation entity) throws JSONException, IOException{
         JSONObject json = new JSONObject(entity.getText());
@@ -35,7 +41,13 @@ public class VmController extends ServerResource{
         // 조회 - 존재 여부 체크.
         // vm.toString 출력.
         // 리스트?
-        System.out.println((String)this.getRequestAttributes().get("macAddress"));
+        Integer macAddress = Integer.parseInt((String)getRequestAttributes().get("macAddress"));
+        
+        //SqlSession sqlSession = sqlSessionFactory.openSession();
+        Vm vm = dbManager.getVmByMacAddress(macAddress);
+
+        System.out.println(vm.toString());
+        //sqlSession.close();
     }
 
     @Patch("json")
