@@ -5,7 +5,24 @@
 
  
 <mapper namespace="RestAPIServer.mapper.VmMapper">
-    <select id="getVmByMacAddress" parameterType="Integer" resultType="RestAPIServer.entity.Vm">
+    <insert id="createVm" parameterType="RestAPIServer.entity.Vm">
+        INSERT INTO vm(
+            cpu,
+            memory,
+            description,
+            status,
+            create_date
+        )
+        VALUES(
+            #{cpu},
+            #{memory},
+            #{description},
+            "stopped",
+            DATE_FORMAT(NOW(), "%Y-%m-%d")
+        )
+    </insert>
+
+    <select id="getVm" parameterType="Integer" resultType="RestAPIServer.entity.Vm">
         SELECT
             mac_address,
             cpu,
@@ -17,4 +34,28 @@
         FROM vm
         WHERE mac_address = ${macAddress}
     </select>
+
+    <update id="updateVm">
+        UPDATE vm
+        
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="cpu != null">
+                cpu = #{cpu},
+            </if>
+            <if test="memory != null">
+                memory = #{memory},
+            </if>
+            <if test="description != null">
+                description = #{description},
+            </if>
+        </trim>
+        
+        WHERE mac_address = ${macAddress}
+    </update>
+
+    <delete id="deleteVm" parameterType="Integer">
+        DELETE
+        FROM vm
+        WHERE mac_address = #{macAddress}
+    </delete>
 </mapper>

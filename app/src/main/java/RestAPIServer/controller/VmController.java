@@ -22,30 +22,33 @@ public class VmController extends ServerResource{
     private DbDao dbDao = DbDao.getInstance();
 
     @Post("json")
-    public void createVm(Representation entity) throws JSONException, IOException{
+    public String createVm(Representation entity) throws JSONException, IOException{
         JSONObject json = new JSONObject(entity.getText());
         ObjectMapper mapper = new ObjectMapper().registerModule(new JsonOrgModule());
         Vm vm = mapper.convertValue(json, Vm.class);
         
-        // 유효성 검사 - 인자 확인.
-        // 동적 컴포넌트?
-        // 생성.
-        System.out.println(vm.toString());
-        System.out.println("has been created!");
+        // 유효성 검사.
+        if(vm.getCpu().equals(null) || vm.getMemory().equals(null)){
+            return "cpu and memory column should not be null\n";
+        }else{
+            dbDao.createVm(vm);
+            return "new vm has been created!\n";
+        }
     }
 
     @Get
-    public void readVm(){
-        // 조회 - 존재 여부 체크.
-        // vm.toString 출력.
-        // 리스트?
+    public void getVm(){
+
         Integer macAddress = Integer.parseInt((String)getRequestAttributes().get("macAddress"));
-        
-        //SqlSession sqlSession = sqlSessionFactory.openSession();
-        Vm vm = dbDao.getVmByMacAddress(macAddress);
+
+        Vm vm = dbDao.getVm(macAddress);
+
+        // 존재 여부 체크.
+        if(vm.equals(null)){
+            return;
+        }
 
         System.out.println(vm.toString());
-        //sqlSession.close();
     }
 
     @Patch("json")
@@ -59,14 +62,19 @@ public class VmController extends ServerResource{
         // status 확인.
         // 수정.
         // 조회 - 출력.
-        System.out.println(vm.toString());
+        dbDao.updateVm(vm);
     }
 
     @Delete
-    public void deleteVm(){
+    public String deleteVm(){
         // 조회 - 존재 여부 체크.
         // status 확인.
         // 삭제.
-        System.out.println((String)this.getRequestAttributes().get("macAddress"));
+
+        
+        Integer macAddress = Integer.parseInt((String)this.getRequestAttributes().get("macAddress"));
+
+        dbDao.deleteVm(macAddress);
+        return String.format("mac_address : %08d vm has been deleted\n", macAddress);
     }
 }

@@ -38,15 +38,48 @@ public class DbDao {
         return InnerDbDaoClass.uniqueDbDaoInstance;
     }
 
-    public Vm getVmByMacAddress(Integer macAddress){
-        SqlSession sqlSession = sqlSessionFactory.openSession();
+    public Vm getVm(Integer macAddress){
+        SqlSession sqlSession = sqlSessionFactory.openSession(true);
 
         try{
             VmMapper vmMapper = sqlSession.getMapper(VmMapper.class);
-            return vmMapper.getVmByMacAddress(macAddress);
+            return vmMapper.getVm(macAddress);
         }finally{
             sqlSession.close();
         }
-       
     }
+
+    public void createVm(Vm vm){
+        SqlSession sqlSession = sqlSessionFactory.openSession(true);
+
+        try{
+            VmMapper vmMapper = sqlSession.getMapper(VmMapper.class);
+            vmMapper.createVm(vm);
+        }finally{
+            sqlSession.close();
+        }
+    }
+
+    public void updateVm(Vm vm){
+        SqlSession sqlSession = sqlSessionFactory.openSession(true);
+
+        try{
+            VmMapper vmMapper = sqlSession.getMapper(VmMapper.class);
+            vmMapper.updateVm(vm);
+        }finally{
+            sqlSession.close();
+        }
+    }
+
+    public void deleteVm(Integer macAddress){
+        SqlSession sqlSession = sqlSessionFactory.openSession(true);
+
+        try{
+            VmMapper vmMapper = sqlSession.getMapper(VmMapper.class);
+            vmMapper.deleteVm(macAddress);
+        }finally{
+            sqlSession.close();
+        }
+    }
+
 }
