@@ -5,6 +5,7 @@
 
  
 <mapper namespace="RestAPIServer.mapper.VmMapper">
+
     <insert id="createVm" parameterType="RestAPIServer.entity.Vm">
         INSERT INTO vm(
             cpu,
@@ -58,4 +59,17 @@
         FROM vm
         WHERE mac_address = #{macAddress}
     </delete>
+
+    <update id="runVm" parameterType="Integer">
+        UPDATE vm
+        SET status = "running"
+        WHERE mac_address = ${macAddress}
+    </update>
+
+    <update id="stopVm" parameterType="Integer">
+        UPDATE vm
+        SET status = "stopped"
+        WHERE mac_address = ${macAddress}
+    </update>
+
 </mapper>

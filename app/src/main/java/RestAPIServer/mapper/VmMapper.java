@@ -11,5 +11,9 @@ public interface VmMapper {
     public void updateVm(Vm vm);
 
     public void deleteVm(Integer macAddress);
+
+    public void runVm(Integer macAddress);
+
+    public void stopVm(Integer macAddress);
     
 }

@@ -82,4 +82,26 @@ public class DbDao {
         }
     }
 
+    public void runVm(Integer macAddress){
+        SqlSession sqlSession = sqlSessionFactory.openSession(true);
+
+        try{
+            VmMapper vmMapper = sqlSession.getMapper(VmMapper.class);
+            vmMapper.runVm(macAddress);
+        }finally{
+            sqlSession.close();
+        }
+    }
+
+    public void stopVm(Integer macAddress){
+        SqlSession sqlSession = sqlSessionFactory.openSession(true);
+
+        try{
+            VmMapper vmMapper = sqlSession.getMapper(VmMapper.class);
+            vmMapper.stopVm(macAddress);
+        }finally{
+            sqlSession.close();
+        }
+    }
+
 }
