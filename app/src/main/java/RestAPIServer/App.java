@@ -11,10 +11,11 @@ import RestAPIServer.controller.VmStopActionController;
 import org.restlet.Application;
 import org.restlet.Component;
 
-// import org.restlet.ServerResource;
-
 public class App extends Application{
     public static void main(String[] args) throws Exception {
+
+        System.out.println("REST API Server Start!");
+
         Component component =  new Component();
         component.getServers().add(Protocol.HTTP, 8888);
 

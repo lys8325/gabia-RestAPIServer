@@ -5,6 +5,7 @@ import java.io.IOException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsonorg.JsonOrgModule;
 
+import org.apache.log4j.Logger;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.restlet.representation.Representation;
@@ -19,6 +20,7 @@ import RestAPIServer.entity.Vm;
 
 public class VmController extends ServerResource{
     
+    private Logger logger = Logger.getLogger(VmController.class);
     private DbDao dbDao = DbDao.getInstance();
 
     @Post("json")
@@ -48,7 +50,7 @@ public class VmController extends ServerResource{
             return;
         }
 
-        System.out.println(vm.toString());
+        logger.info(vm.toString());
     }
 
     @Patch("json")
