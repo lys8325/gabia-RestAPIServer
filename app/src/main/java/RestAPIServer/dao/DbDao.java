@@ -1,4 +1,4 @@
-package RestAPIServer.mapper;
+package RestAPIServer.dao;
 
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -9,20 +9,19 @@ import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.ibatis.session.SqlSessionFactoryBuilder;
 
 import RestAPIServer.entity.Vm;
+import RestAPIServer.mapper.VmMapper;
 
-public class DBManager {
+public class DbDao {
     
     public SqlSessionFactory sqlSessionFactory;
     
-    private DBManager(){
+    private DbDao(){
         
         String resource = "app/src/main/resources/mybatis-config.xml";
         
         try {
             InputStream inputStream = new FileInputStream(resource);
-            System.out.println("until!================================================");
             sqlSessionFactory = new SqlSessionFactoryBuilder().build(inputStream);
-            System.out.println("here!================================================");
             inputStream.close();
         } catch (IOException e) {
             // TODO Auto-generated catch block
@@ -31,12 +30,12 @@ public class DBManager {
         
     }
 
-    private static class InnerDBManagerClass{
-        private static final DBManager uniqueDBManagerInstance = new DBManager();
+    private static class InnerDbDaoClass{
+        private static final DbDao uniqueDbDaoInstance = new DbDao();
     }
 
-    public static DBManager getInstance(){
-        return InnerDBManagerClass.uniqueDBManagerInstance;
+    public static DbDao getInstance(){
+        return InnerDbDaoClass.uniqueDbDaoInstance;
     }
 
     public Vm getVmByMacAddress(Integer macAddress){

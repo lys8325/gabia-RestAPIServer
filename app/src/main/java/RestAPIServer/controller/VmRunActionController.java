@@ -1,17 +1,14 @@
 package RestAPIServer.controller;
 
 import org.restlet.resource.ServerResource;
-import RestAPIServer.RPCClient.RPCClient;
-
 import java.net.MalformedURLException;
-
 import org.apache.xmlrpc.XmlRpcException;
 import org.restlet.resource.Get;
 
 public class VmRunActionController extends ServerResource{
 
     // private RPCClient rPCClient = RPCClient.getInstance();
-    private XMLClient xmlClient = XMLClient.getInstance();
+    private XmlClientController xmlClientController = XmlClientController.getInstance();
 
     @Get
     public void runVm() throws MalformedURLException, XmlRpcException {
@@ -22,7 +19,7 @@ public class VmRunActionController extends ServerResource{
         // status 확인.
         // 수정.
         //rPCClient.runVm(targetMacAddress);
-        xmlClient.runVm(targetMacAddress);
+        xmlClientController.runVm(targetMacAddress);
     }
     
 }

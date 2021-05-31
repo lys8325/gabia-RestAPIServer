@@ -5,8 +5,6 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.Vector;
 
-import javax.swing.text.html.CSS;
-
 import org.apache.xmlrpc.XmlRpcException;
 import org.apache.xmlrpc.client.XmlRpcClient;
 import org.apache.xmlrpc.client.XmlRpcClientConfigImpl;
@@ -14,14 +12,14 @@ import org.apache.xmlrpc.client.XmlRpcClientConfigImpl;
 import lombok.NoArgsConstructor;
 
 @NoArgsConstructor
-public class XMLClient {
+public class XmlClientController {
 
-    private static class InnerXMLClientClass{
-        private static final XMLClient uniqueXMLClientInstance = new XMLClient();
+    private static class InnerXmlClientClass{
+        private static final XmlClientController uniqueXmlClientInstance = new XmlClientController();
     }
 
-    public static XMLClient getInstance(){
-        return InnerXMLClientClass.uniqueXMLClientInstance;
+    public static XmlClientController getInstance(){
+        return InnerXmlClientClass.uniqueXmlClientInstance;
     }
     
     public void runVm(Integer macAddress) throws XmlRpcException, MalformedURLException{

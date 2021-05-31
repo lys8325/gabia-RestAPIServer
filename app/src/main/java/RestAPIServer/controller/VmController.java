@@ -5,8 +5,6 @@ import java.io.IOException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsonorg.JsonOrgModule;
 
-import org.apache.ibatis.session.SqlSession;
-import org.apache.ibatis.session.SqlSessionFactory;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.restlet.representation.Representation;
@@ -15,13 +13,13 @@ import org.restlet.resource.Get;
 import org.restlet.resource.Patch;
 import org.restlet.resource.Post;
 import org.restlet.resource.ServerResource;
+
+import RestAPIServer.dao.DbDao;
 import RestAPIServer.entity.Vm;
-import RestAPIServer.mapper.DBManager;
-import RestAPIServer.mapper.VmMapper;
 
 public class VmController extends ServerResource{
     
-    private DBManager dbManager = DBManager.getInstance();
+    private DbDao dbDao = DbDao.getInstance();
 
     @Post("json")
     public void createVm(Representation entity) throws JSONException, IOException{
@@ -44,7 +42,7 @@ public class VmController extends ServerResource{
         Integer macAddress = Integer.parseInt((String)getRequestAttributes().get("macAddress"));
         
         //SqlSession sqlSession = sqlSessionFactory.openSession();
-        Vm vm = dbManager.getVmByMacAddress(macAddress);
+        Vm vm = dbDao.getVmByMacAddress(macAddress);
 
         System.out.println(vm.toString());
         //sqlSession.close();
