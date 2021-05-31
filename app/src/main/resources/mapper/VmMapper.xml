@@ -6,7 +6,14 @@
  
 <mapper namespace="RestAPIServer.mapper.VmMapper">
     <select id="getVmByMacAddress" parameterType="Integer" resultType="RestAPIServer.entity.Vm">
-        SELECT *
+        SELECT
+            mac_address,
+            cpu,
+            memory,
+            description,
+            status,
+            create_date,
+            delete_date
         FROM vm
         WHERE mac_address = ${macAddress}
     </select>
