@@ -21,8 +21,8 @@ public class App extends Application{
 
         component.getDefaultHost().attach("/vm/{macAddress}", VmController.class);
         component.getDefaultHost().attach("/vm", VmController.class);
-        component.getDefaultHost().attach("/vmRunAction/{macAddress}", VmRunActionController.class);
-        component.getDefaultHost().attach("/vmStopAction/{macAddress}", VmStopActionController.class);
+        component.getDefaultHost().attach("/vm/action/run/{macAddress}", VmRunActionController.class);
+        component.getDefaultHost().attach("/vm/action/stop/{macAddress}", VmStopActionController.class);
 
         component.start();
     }

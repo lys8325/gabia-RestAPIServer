@@ -36,7 +36,7 @@
         WHERE mac_address = ${macAddress}
     </select>
 
-    <update id="updateVm">
+    <update id="updateVm" parameterType="RestAPIServer.entity.Vm">
         UPDATE vm
         
         <trim prefix="SET" suffixOverrides=",">
@@ -54,11 +54,13 @@
         WHERE mac_address = ${macAddress}
     </update>
 
-    <delete id="deleteVm" parameterType="Integer">
-        DELETE
-        FROM vm
-        WHERE mac_address = #{macAddress}
-    </delete>
+    <update id="deleteVm" parameterType="Integer">
+        UPDATE vm
+        SET
+            status = "deleted",
+            delete_date = NOW()
+        WHERE mac_address = ${macAddress}
+    </update>
 
     <update id="runVm" parameterType="Integer">
         UPDATE vm

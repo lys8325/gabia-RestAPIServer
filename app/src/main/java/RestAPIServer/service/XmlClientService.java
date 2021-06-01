@@ -1,4 +1,4 @@
-package RestAPIServer.controller;
+package RestAPIServer.service;
 
 import java.io.Serializable;
 import java.net.MalformedURLException;
@@ -12,14 +12,14 @@ import org.apache.xmlrpc.client.XmlRpcClientConfigImpl;
 import lombok.NoArgsConstructor;
 
 @NoArgsConstructor
-public class XmlClientController {
+public class XmlClientService {
 
-    private static class InnerXmlClientClass{
-        private static final XmlClientController uniqueXmlClientInstance = new XmlClientController();
+    private static class InnerXmlClientServiceClass{
+        private static final XmlClientService uniqueXmlClientServiceInstance = new XmlClientService();
     }
 
-    public static XmlClientController getInstance(){
-        return InnerXmlClientClass.uniqueXmlClientInstance;
+    public static XmlClientService getInstance(){
+        return InnerXmlClientServiceClass.uniqueXmlClientServiceInstance;
     }
     
     public void runVm(Integer macAddress) throws XmlRpcException, MalformedURLException{
@@ -27,7 +27,7 @@ public class XmlClientController {
         XmlRpcClientConfigImpl xmlRpcClientConfigImpl = new XmlRpcClientConfigImpl();
         Vector<Serializable> params = new Vector<Serializable>();
 
-        xmlRpcClientConfigImpl.setServerURL(new URL("http://localhost:8889"));
+        xmlRpcClientConfigImpl.setServerURL(new URL("http://139.150.74.19:8889"));
         xmlRpcClient.setConfig(xmlRpcClientConfigImpl);
         params.add(macAddress);
 
@@ -40,7 +40,7 @@ public class XmlClientController {
         XmlRpcClientConfigImpl xmlRpcClientConfigImpl = new XmlRpcClientConfigImpl();
         Vector<Serializable> params = new Vector<Serializable>();
 
-        xmlRpcClientConfigImpl.setServerURL(new URL("http://localhost:8889"));
+        xmlRpcClientConfigImpl.setServerURL(new URL("http://139.150.74.19:8889"));
         xmlRpcClient.setConfig(xmlRpcClientConfigImpl);
         params.add(macAddress);
 

@@ -14,69 +14,74 @@ import org.restlet.resource.Get;
 import org.restlet.resource.Patch;
 import org.restlet.resource.Post;
 import org.restlet.resource.ServerResource;
-
-import RestAPIServer.dao.DbDao;
 import RestAPIServer.entity.Vm;
+import RestAPIServer.service.VmService;
 
 public class VmController extends ServerResource{
-    
+
+    private VmService vmService = VmService.getInstance();
     private Logger logger = Logger.getLogger(VmController.class);
-    private DbDao dbDao = DbDao.getInstance();
 
     @Post("json")
     public String createVm(Representation entity) throws JSONException, IOException{
+        
         JSONObject json = new JSONObject(entity.getText());
         ObjectMapper mapper = new ObjectMapper().registerModule(new JsonOrgModule());
         Vm vm = mapper.convertValue(json, Vm.class);
-        
-        // 유효성 검사.
-        if(vm.getCpu().equals(null) || vm.getMemory().equals(null)){
-            return "cpu and memory column should not be null\n";
-        }else{
-            dbDao.createVm(vm);
-            return "new vm has been created!\n";
-        }
+        String response = vmService.createVm(vm);
+
+        logger.info(response);
+        return response;
+
     }
 
     @Get
-    public void getVm(){
+    public String getVm(){
 
         Integer macAddress = Integer.parseInt((String)getRequestAttributes().get("macAddress"));
+        Vm vm = vmService.getVm(macAddress);
+        String response;
 
-        Vm vm = dbDao.getVm(macAddress);
+        // 존재 여부 검사.
+        if(vm == null){
+            response = String.format("there is no vm ( mac_address : %08d ).", macAddress);
+        }else{
 
-        // 존재 여부 체크.
-        if(vm.equals(null)){
-            return;
+            if(vm.getStatus() == "deleted"){
+                response = String.format("vm ( mac_address : %08d ) does not exist. already deleted.", macAddress);
+            }else{
+                response = vm.toString();
+            }            
         }
 
-        logger.info(vm.toString());
+        logger.info(response);
+        return response;
+            
     }
 
     @Patch("json")
-    public void updateVm(Representation entity) throws JSONException, IOException{
+    public String updateVm(Representation entity) throws JSONException, IOException{
+
         JSONObject json = new JSONObject(entity.getText());
         ObjectMapper mapper = new ObjectMapper().registerModule(new JsonOrgModule());
         Vm vm = mapper.convertValue(json, Vm.class);
-        
+        String response = vmService.updateVm(vm);
 
-        // 조회 - 존재 여부 체크.
-        // status 확인.
-        // 수정.
-        // 조회 - 출력.
-        dbDao.updateVm(vm);
+        logger.info(response);
+        return response;
+
     }
 
     @Delete
     public String deleteVm(){
-        // 조회 - 존재 여부 체크.
-        // status 확인.
-        // 삭제.
-
-        
+    
         Integer macAddress = Integer.parseInt((String)this.getRequestAttributes().get("macAddress"));
+        String response = vmService.deleteVm(macAddress);
 
-        dbDao.deleteVm(macAddress);
-        return String.format("mac_address : %08d vm has been deleted\n", macAddress);
+
+        logger.info(response);
+        return response;
+
     }
+
 }

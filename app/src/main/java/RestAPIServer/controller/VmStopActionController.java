@@ -2,6 +2,8 @@ package RestAPIServer.controller;
 
 import org.restlet.resource.ServerResource;
 import RestAPIServer.dao.DbDao;
+import RestAPIServer.service.XmlClientService;
+
 import java.net.MalformedURLException;
 import org.apache.log4j.Logger;
 import org.apache.xmlrpc.XmlRpcException;
@@ -11,7 +13,7 @@ public class VmStopActionController extends ServerResource{
 
     private Logger logger = Logger.getLogger(VmStopActionController.class);
     private DbDao dbDao = DbDao.getInstance();
-    private XmlClientController xmlClientController = XmlClientController.getInstance();
+    private XmlClientService xmlClientService = XmlClientService.getInstance();
 
     @Get
     public void stopVm() throws MalformedURLException, XmlRpcException {
@@ -24,7 +26,7 @@ public class VmStopActionController extends ServerResource{
         // status 확인.
         // 수정.
         //rPCClient.stopVm(targetMacAddress);
-        xmlClientController.stopVm(macAddress);
+        xmlClientService.stopVm(macAddress);
     }
     
 }
