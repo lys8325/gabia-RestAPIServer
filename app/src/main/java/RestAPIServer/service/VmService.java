@@ -1,9 +1,7 @@
 package RestAPIServer.service;
 
 import java.net.MalformedURLException;
-
 import org.apache.xmlrpc.XmlRpcException;
-
 import RestAPIServer.dao.DbDao;
 import RestAPIServer.entity.Vm;
 import lombok.NoArgsConstructor;
@@ -148,7 +146,7 @@ public class VmService {
                 dbDao.stopVm(macAddress);
                 response = String.format("vm ( mac_address : %08d ) has been stopped!", macAddress);
             }else if(status.equals("stopped")){
-                response = String.format("vm ( mac_address : %08d ) is already stopped!", macAddress);
+                response = String.format("vm ( mac_address : %08d ) is already stopped.", macAddress);
             }
         }
         
