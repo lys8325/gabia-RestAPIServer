@@ -1,5 +1,9 @@
 package RestAPIServer.service;
 
+import java.net.MalformedURLException;
+
+import org.apache.xmlrpc.XmlRpcException;
+
 import RestAPIServer.dao.DbDao;
 import RestAPIServer.entity.Vm;
 import lombok.NoArgsConstructor;
@@ -8,6 +12,7 @@ import lombok.NoArgsConstructor;
 public class VmService {
 
     private DbDao dbDao = DbDao.getInstance();
+    private XmlClientService xmlClientService = XmlClientService.getInstance();
 
     private static class InnerVmServiceClass{
         private final static VmService uniqueVmServiceInstance = new VmService();
@@ -97,11 +102,57 @@ public class VmService {
 
     }
 
-    public void runVm(){
+    public String runVm(Integer macAddress) throws MalformedURLException, XmlRpcException{
+
+        Vm vm = getVm(macAddress);
+        String response = "";
+
+        // 존재 여부 확인.
+        if(vm == null){
+            response = String.format("there is no vm ( mac_address : %08d ).", macAddress);
+        }else{
+            String status = vm.getStatus();
+
+            // status 확인.
+            if(status.equals("deleted")){
+                response = String.format("vm ( mac_address : %08d ) does not exist. already deleted.", macAddress);
+            }else if(status.equals("running")){
+                response = String.format("vm ( mac_address : %08d ) is already running.", macAddress);
+            }else if(status.equals("stopped")){
+                xmlClientService.runVm(macAddress);
+                dbDao.runVm(macAddress);
+                response = String.format("vm ( mac_address : %08d ) has been started!", macAddress);
+            }
+        }
+        
+        return response;
 
     }
 
-    public void stopVm(){
+    public String stopVm(Integer macAddress) throws MalformedURLException, XmlRpcException{
+
+        Vm vm = getVm(macAddress);
+        String response = "";
+
+        // 존재 여부 확인.
+        if(vm == null){
+            response = String.format("there is no vm ( mac_address : %08d ).", macAddress);
+        }else{
+            String status = vm.getStatus();
+
+            // status 확인.
+            if(status.equals("deleted")){
+                response = String.format("vm ( mac_address : %08d ) does not exist. already deleted.", macAddress);
+            }else if(status.equals("running")){
+                xmlClientService.stopVm(macAddress);
+                dbDao.stopVm(macAddress);
+                response = String.format("vm ( mac_address : %08d ) has been stopped!", macAddress);
+            }else if(status.equals("stopped")){
+                response = String.format("vm ( mac_address : %08d ) is already stopped!", macAddress);
+            }
+        }
+        
+        return response;
 
     }
 

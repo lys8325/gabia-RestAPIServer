@@ -1,9 +1,7 @@
 package RestAPIServer.controller;
 
 import org.restlet.resource.ServerResource;
-import RestAPIServer.dao.DbDao;
-import RestAPIServer.service.XmlClientService;
-
+import RestAPIServer.service.VmService;
 import java.net.MalformedURLException;
 import org.apache.log4j.Logger;
 import org.apache.xmlrpc.XmlRpcException;
@@ -12,21 +10,16 @@ import org.restlet.resource.Get;
 public class VmRunActionController extends ServerResource{
 
     private Logger logger = Logger.getLogger(VmRunActionController.class);
-    private DbDao dbDao = DbDao.getInstance();
-    private XmlClientService xmlClientService = XmlClientService.getInstance();
+    private VmService vmService = VmService.getInstance();
 
     @Get
-    public void runVm() throws MalformedURLException, XmlRpcException {
-        String targetMacAddress = (String)this.getRequestAttributes().get("macAddress");
-        int macAddress = Integer.parseInt(targetMacAddress);
+    public String runVm() throws MalformedURLException, XmlRpcException {
 
-        dbDao.runVm(macAddress);
-
-        // 조회 - 존재 여부 체크.
-        // status 확인.
-        // 수정.
-        //rPCClient.runVm(targetMacAddress);
-        xmlClientService.runVm(macAddress);
+        int macAddress = Integer.parseInt((String)this.getRequestAttributes().get("macAddress"));
+        String response = vmService.runVm(macAddress);
+    
+        logger.info(response);
+        return response;
     }
     
 }
