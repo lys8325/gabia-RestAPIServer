@@ -26,10 +26,10 @@ public class VmService {
 
         // 유효성 검사.
         if(vm.getCpu() == null || vm.getMemory() == null){
-            response = "cpu and memory column should not be null.";
+            response = "cpu and memory fields should not be null.";
         }else{
             dbDao.createVm(vm);
-            response = "new vm has been created!";
+            response = String.format("new vm ( mac_address : %08d ) has been created!", vm.getMacAddress());
         }
 
         return response;
@@ -51,7 +51,7 @@ public class VmService {
 
         // 존재 여부 확인.
         if(originalVm == null){
-            response = String.format("there is no vm ( mac_address : %08d ).", macAddress);
+            response = String.format("vm ( mac_address : %08d ) does not exist.", macAddress);
         }else{
             String status = originalVm.getStatus();
 
@@ -81,7 +81,7 @@ public class VmService {
 
         // 존재 여부 확인.
         if(vm == null){
-            response = String.format("there is no vm ( mac_address : %08d ).", macAddress);
+            response = String.format("vm ( mac_address : %08d ) does not exist.", macAddress);
         }else{
             String status = vm.getStatus();
 
@@ -107,7 +107,7 @@ public class VmService {
 
         // 존재 여부 확인.
         if(vm == null){
-            response = String.format("there is no vm ( mac_address : %08d ).", macAddress);
+            response = String.format("vm ( mac_address : %08d ) does not exist.", macAddress);
         }else{
             String status = vm.getStatus();
 
@@ -134,7 +134,7 @@ public class VmService {
 
         // 존재 여부 확인.
         if(vm == null){
-            response = String.format("there is no vm ( mac_address : %08d ).", macAddress);
+            response = String.format("vm ( mac_address : %08d ) does not exist.", macAddress);
         }else{
             String status = vm.getStatus();
 

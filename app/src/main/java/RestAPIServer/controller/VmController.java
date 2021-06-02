@@ -44,12 +44,11 @@ public class VmController extends ServerResource{
         if(vm == null){
             response = String.format("there is no vm ( mac_address : %08d ).", macAddress);
         }else{
-
+            response = vm.toString();
+            
             if(vm.getStatus().equals("deleted")){
-                response = String.format("vm ( mac_address : %08d ) does not exist. already deleted.", macAddress);
-            }else{
-                response = vm.toString();
-            }            
+                response += "\n\nthis vm is already deleted.";
+            }           
         }
 
         logger.info(response);

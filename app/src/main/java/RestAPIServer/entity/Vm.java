@@ -26,7 +26,7 @@ public class Vm {
         ret += "\tstatus : " + this.getStatus() + "\n";
         ret += "\tcreateDate : " + this.getCreateDate() + "\n";
         ret += "\tdeleteDate : " + this.getDeleteDate() + "\n";
-        ret += "}\n";
+        ret += "}";
 
         return ret;
     }

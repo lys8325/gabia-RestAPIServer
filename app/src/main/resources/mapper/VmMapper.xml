@@ -21,6 +21,10 @@
             "stopped",
             DATE_FORMAT(NOW(), "%Y-%m-%d")
         )
+
+        <selectKey keyProperty="macAddress" resultType="Integer">
+            SELECT last_insert_id()
+        </selectKey>
     </insert>
 
     <select id="getVm" parameterType="Integer" resultType="RestAPIServer.entity.Vm">
