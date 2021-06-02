@@ -1,8 +1,5 @@
 package RestAPIServer.dao;
 
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.InputStream;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.ibatis.session.SqlSessionFactoryBuilder;
@@ -14,18 +11,7 @@ public class DbDao {
     public SqlSessionFactory sqlSessionFactory;
     
     private DbDao(){
-        
-        String resource = "app/src/main/resources/mybatis-config.xml";
-        
-        try {
-            InputStream inputStream = new FileInputStream(resource);
-            sqlSessionFactory = new SqlSessionFactoryBuilder().build(inputStream);
-            inputStream.close();
-        } catch (IOException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }
-        
+        sqlSessionFactory = new SqlSessionFactoryBuilder().build(super.getClass().getClassLoader().getResourceAsStream("mybatis-config.xml"));
     }
 
     private static class InnerDbDaoClass{

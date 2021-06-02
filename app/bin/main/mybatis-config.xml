@@ -4,19 +4,21 @@
   "http://mybatis.org/dtd/mybatis-3-config.dtd" >
  
 <configuration>
- 
+
+  <properties resource="./db.properties"/>
+  
   <settings>
     <setting name="mapUnderscoreToCamelCase" value="true" />
   </settings>
-
+  
   <environments default="development">
     <environment id="development">
       <transactionManager type="JDBC" />
       <dataSource type="POOLED">
-        <property name="driver" value="com.mysql.cj.jdbc.Driver" />
-        <property name="url" value="jdbc:mysql://139.150.74.19:3306/rest" />
-        <property name="username" value="ian" />
-        <property name="password" value="!Gurtndl1409" />
+        <property name="driver" value="${driver}" />
+        <property name="url" value="${url}" />
+        <property name="username" value="${username}" />
+        <property name="password" value="${password}" />
  
       </dataSource>
     </environment>
